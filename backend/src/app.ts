@@ -13,10 +13,10 @@ export const createApp = () => {
 
   app.use(helmet());
   app.use(
-    cors({
-      origin: env.NODE_ENV === "development" ? "*" : false,
-    }),
-  );
+  cors({
+    origin: env.NODE_ENV === "development" ? "*" : "https://your-netlify-app.netlify.app", // Placeholder
+  }),
+);
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(
