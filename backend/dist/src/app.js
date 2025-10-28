@@ -16,7 +16,7 @@ const createApp = () => {
     const app = (0, express_1.default)();
     app.use((0, helmet_1.default)());
     app.use((0, cors_1.default)({
-        origin: env_1.env.NODE_ENV === "development" ? "*" : false,
+        origin: env_1.env.NODE_ENV === "development" ? "*" : "https://garagemanagement.netlify.app", // Placeholder
     }));
     app.use(express_1.default.json());
     app.use(express_1.default.urlencoded({ extended: true }));
