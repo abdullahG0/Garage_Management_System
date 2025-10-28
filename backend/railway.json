@@ -2,7 +2,6 @@
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": "npm install && npx prisma generate && npx tsc -p tsconfig.json"
+    "buildCommand": "npm install && npx -p prisma prisma generate && npx -p typescript tsc -p tsconfig.json"
   }
-  
 }
