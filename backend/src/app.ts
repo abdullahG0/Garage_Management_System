@@ -14,7 +14,7 @@ export const createApp = () => {
   app.use(helmet());
   app.use(
   cors({
-    origin: env.NODE_ENV === "development" ? "*" : "https://your-netlify-app.netlify.app", // Placeholder
+    origin: env.NODE_ENV === "development" ? "*" : "https://garagemanagement.netlify.app", // Placeholder
   }),
 );
   app.use(express.json());
