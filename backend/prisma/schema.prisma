@@ -8,97 +8,97 @@ datasource db {
 }
 
 model Customer {
-  id             Int            @id @default(autoincrement())
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-  firstName      String
-  lastName       String
-  email          String?        @unique
-  phone          String
-  company        String?
-  notes          String?
-  vehicles       Vehicle[]
-  workOrders     WorkOrder[]    @relation("CustomerWorkOrders")
-  addressLine1   String?
-  addressLine2   String?
-  city           String?
-  state          String?
-  postalCode     String?
+  id           Int         @id @default(autoincrement())
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  firstName    String
+  lastName     String
+  email        String?     @unique
+  phone        String
+  company      String?
+  notes        String?
+  addressLine1 String?
+  addressLine2 String?
+  city         String?
+  state        String?
+  postalCode   String?
+  vehicles     Vehicle[]
+  workOrders   WorkOrder[] @relation("CustomerWorkOrders")
 }
 
 model Vehicle {
-  id             Int            @id @default(autoincrement())
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-  customer       Customer       @relation(fields: [customerId], references: [id])
-  customerId     Int
-  vin            String         @unique
-  make           String
-  model          String
-  year           Int
-  licensePlate   String?
-  mileage        Int?
-  color          String?
-  engine         String?
-  notes          String?
-  workOrders     WorkOrder[]
+  id           Int         @id @default(autoincrement())
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  customerId   Int
+  vin          String      @unique
+  make         String
+  model        String
+  year         Int
+  licensePlate String?
+  mileage      Int?
+  color        String?
+  engine       String?
+  notes        String?
+  customer     Customer    @relation(fields: [customerId], references: [id])
+  workOrders   WorkOrder[]
 }
 
 model WorkOrder {
-  id             Int                  @id @default(autoincrement())
-  createdAt      DateTime             @default(now())
-  updatedAt      DateTime             @updatedAt
-  code           String               @unique
-  customer       Customer?            @relation("CustomerWorkOrders", fields: [customerId], references: [id])
-  customerId     Int?
-  vehicle        Vehicle              @relation(fields: [vehicleId], references: [id])
-  vehicleId      Int
-  status         String               @default("PENDING")
-  description    String
-  scheduledDate  DateTime?
-  completedDate  DateTime?
-  laborCost      Decimal              @default(0)
-  partsCost      Decimal              @default(0)
-  taxes          Decimal              @default(0)
-  discount       Decimal              @default(0)
-  totalCost      Decimal              @default(0)
-  notes          String?
-  parkingCharge  Decimal              @default(0)
-  arrivalDate    DateTime?
-  quotedAt       DateTime?
-  isHistorical   Boolean              @default(false)
-  lineItems      WorkOrderLineItem[]
-  logs           WorkOrderLog[]
-  assignments    WorkOrderAssignment[]
+  id            Int                   @id @default(autoincrement())
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+  code          String                @unique
+  customerId    Int?
+  vehicleId     Int
+  status        String                @default("PENDING")
+  description   String
+  scheduledDate DateTime?
+  completedDate DateTime?
+  laborCost     Decimal               @default(0)
+  partsCost     Decimal               @default(0)
+  taxes         Decimal               @default(0)
+  discount      Decimal               @default(0)
+  totalCost     Decimal               @default(0)
+  notes         String?
+  parkingCharge Decimal               @default(0)
+  arrivalDate   DateTime?
+  quotedAt      DateTime?
+  isHistorical  Boolean               @default(false)
+  customer      Customer?             @relation("CustomerWorkOrders", fields: [customerId], references: [id])
+  vehicle       Vehicle               @relation(fields: [vehicleId], references: [id])
+  assignments   WorkOrderAssignment[]
+  lineItems     WorkOrderLineItem[]
+  logs          WorkOrderLog[]
 }
 
 model WorkOrderLineItem {
-  id               Int             @id @default(autoincrement())
-  createdAt        DateTime        @default(now())
-  workOrder        WorkOrder       @relation(fields: [workOrderId], references: [id])
-  workOrderId      Int
-  inventoryItem    InventoryItem?  @relation(fields: [inventoryItemId], references: [id])
-  inventoryItemId  Int?
-  serviceItem      ServiceItem?    @relation(fields: [serviceItemId], references: [id])
-  serviceItemId    Int?
-  description      String
-  quantity         Int             @default(1)
-  unitPrice        Decimal         @default(0)
-  lineTotal        Decimal         @default(0)
+  id              Int            @id @default(autoincrement())
+  createdAt       DateTime       @default(now())
+  workOrderId     Int
+  inventoryItemId Int?
+  serviceItemId   Int?
+  description     String
+  quantity        Int            @default(1)
+  unitPrice       Decimal        @default(0)
+  lineTotal       Decimal        @default(0)
+  inventoryItem   InventoryItem? @relation(fields: [inventoryItemId], references: [id])
+  serviceItem     ServiceItem?   @relation(fields: [serviceItemId], references: [id])
+  workOrder       WorkOrder      @relation(fields: [workOrderId], references: [id])
 }
 
 model InventoryItem {
-  id            Int                  @id @default(autoincrement())
-  createdAt     DateTime             @default(now())
-  updatedAt     DateTime             @updatedAt
-  name          String
-  sku           String               @unique
-  description   String?
+  id             Int                 @id @default(autoincrement())
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  name           String
+  sku            String              @unique
+  description    String?
   quantityOnHand Int                 @default(0)
-  reorderPoint  Int                  @default(0)
-  unitCost      Decimal              @default(0)
-  unitPrice     Decimal              @default(0)
-  lineItems     WorkOrderLineItem[]
+  reorderPoint   Int                 @default(0)
+  unitCost       Decimal             @default(0)
+  unitPrice      Decimal             @default(0)
+  lineItems      WorkOrderLineItem[]
 }
 
 model ServiceItem {
@@ -112,42 +112,42 @@ model ServiceItem {
 }
 
 model WorkOrderLog {
-  id            Int             @id @default(autoincrement())
-  timestamp     DateTime        @default(now())
-  workOrder     WorkOrder       @relation(fields: [workOrderId], references: [id])
-  workOrderId   Int
-  message       String
-  author        String?
-  category      String?
+  id          Int       @id @default(autoincrement())
+  timestamp   DateTime  @default(now())
+  workOrderId Int
+  message     String
+  author      String?
+  category    String?
+  workOrder   WorkOrder @relation(fields: [workOrderId], references: [id])
 }
 
 model Worker {
-  id            Int                   @id @default(autoincrement())
-  createdAt     DateTime              @default(now())
-  updatedAt     DateTime              @updatedAt
-  name          String
-  email         String?
-  phone         String?
-  commuteExpense Decimal              @default(0)
-  shiftExpense   Decimal              @default(0)
-  mealExpense    Decimal              @default(0)
-  otherExpense   Decimal              @default(0)
-  totalJobs     Int                   @default(0)
-  totalServices Int                   @default(0)
-  assignments   WorkOrderAssignment[]
+  id             Int                   @id @default(autoincrement())
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+  name           String
+  email          String?
+  phone          String?
+  commuteExpense Decimal               @default(0)
+  shiftExpense   Decimal               @default(0)
+  mealExpense    Decimal               @default(0)
+  otherExpense   Decimal               @default(0)
+  totalJobs      Int                   @default(0)
+  totalServices  Int                   @default(0)
+  assignments    WorkOrderAssignment[]
 }
 
 model WorkOrderAssignment {
   id            Int       @id @default(autoincrement())
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  workOrder     WorkOrder @relation(fields: [workOrderId], references: [id])
   workOrderId   Int
-  worker        Worker    @relation(fields: [workerId], references: [id])
   workerId      Int
   role          String?
   notes         String?
   servicesCount Int       @default(0)
+  workOrder     WorkOrder @relation(fields: [workOrderId], references: [id])
+  worker        Worker    @relation(fields: [workerId], references: [id])
 
   @@unique([workOrderId, workerId])
 }
