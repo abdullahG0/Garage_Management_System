@@ -9,10 +9,6 @@
     "start": "node dist/src/server.js",
     "lint": "eslint --ext .ts src",
     "db:setup": "npm run prisma:migrate && npm run prisma:seed",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma db push --accept-data-loss",
-    "prisma:push": "prisma db push",
-    "prisma:seed": "ts-node prisma/seed.ts",
     "verify:workers": "ts-node scripts/worker-smoke.ts",
     "check": "npm run lint && npm run build"
   },
@@ -31,7 +27,6 @@
     "morgan": "^1.10.0",
     "pino": "^9.3.1",
     "pino-pretty": "^11.2.2",
-    "prisma": "^5.20.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
